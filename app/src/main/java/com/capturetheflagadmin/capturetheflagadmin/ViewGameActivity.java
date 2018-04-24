@@ -50,7 +50,7 @@ public class ViewGameActivity extends AppCompatActivity implements OnMapReadyCal
     private String PlayerReferenceId;
 
     private TextView tvGameStatus;
-    private Button btnStartGame;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class ViewGameActivity extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_view_game);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         tvGameStatus = findViewById(R.id.tvGameStatus);
-        btnStartGame = findViewById(R.id.btnStartGame);
+
         initMap();
         getUpdateOnMap();
         valueListnerOnGame();
@@ -96,16 +96,17 @@ public class ViewGameActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.child("isStart").getValue(Boolean.class)){
-                    btnStartGame.setVisibility(View.INVISIBLE);
-                    btnStartGame.setBackgroundColor(Color.GREEN);
-                    btnStartGame.setEnabled(true);
+//                    btnStartGame.setVisibility(View.INVISIBLE);
+//                    btnStartGame.setBackgroundColor(Color.GREEN);
+//                    btnStartGame.setEnabled(true);
                     tvGameStatus.setText(
                             dataSnapshot.child("winner").getValue(String.class).isEmpty() ? "Game is in Progress" : "Team "
                                     + dataSnapshot.child("winner").getValue(String.class) +" won."
                     );
                 }
                 else{
-                    btnStartGame.setEnabled(false);
+//                    btnStartGame.setVisibility(View.VISIBLE);
+//                    btnStartGame.setEnabled(false);
                     tvGameStatus.setText("Game Not Started.");
                 }
             }
@@ -196,31 +197,31 @@ public class ViewGameActivity extends AppCompatActivity implements OnMapReadyCal
             }
             if(teamAPlayers.size() != 0 && teamBPlayers.size() != 0){
                 if(teamAPlayers.size() == teamBPlayers.size()){
-                    btnStartGame.setVisibility(View.VISIBLE);
+//                    btnStartGame.setVisibility(View.VISIBLE);
                     tvGameStatus.setText("Pressed Start Button to Start The Game.");
-                    btnStartGame.setBackgroundColor(Color.GREEN);
-                    btnStartGame.setEnabled(true);
-                    btnStartGame.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            databaseReference.child("Game").child("isStart").setValue(true);
-                            tvGameStatus.setText("Game is in Progress");
-                            btnStartGame.setVisibility(View.INVISIBLE);
-                        }
-                    });
+//                    btnStartGame.setBackgroundColor(Color.GREEN);
+//                    btnStartGame.setEnabled(true);
+//                    btnStartGame.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            databaseReference.child("Game").child("isStart").setValue(true);
+//                            tvGameStatus.setText("Game is in Progress");
+//                            btnStartGame.setVisibility(View.INVISIBLE);
+//                        }
+//                    });
                 }
                 else{
-                    btnStartGame.setVisibility(View.VISIBLE);
-                    btnStartGame.setBackgroundColor(Color.RED);
-                    btnStartGame.setEnabled(false);
+//                    btnStartGame.setVisibility(View.VISIBLE);
+//                    btnStartGame.setBackgroundColor(Color.RED);
+//                    btnStartGame.setEnabled(false);
                     tvGameStatus.setText("Game Not Started. Need Equal Player in each team.");
                     databaseReference.child("Game").child("isStart").setValue(false);
                 }
             }
             else{
-                btnStartGame.setVisibility(View.INVISIBLE);
-                btnStartGame.setBackgroundColor(Color.RED);
-                btnStartGame.setEnabled(false);
+//                btnStartGame.setVisibility(View.INVISIBLE);
+//                btnStartGame.setBackgroundColor(Color.RED);
+//                btnStartGame.setEnabled(false);
                 tvGameStatus.setText("Game Not Started. Waiting For Player to Join");
                 databaseReference.child("Game").child("isStart").setValue(false);
             }
